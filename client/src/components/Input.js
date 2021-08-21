@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { update } from '../redux/userSlice'
+import { remove, update } from '../redux/userSlice'
 
 function Input() {
 
@@ -17,10 +17,16 @@ function Input() {
         setName('')
         setEmail('')
     }
+    function handleRemove(e) {
+        e.preventDefault()
+        dispatch(remove())
+
+    }
 
     return (
 
         <div className="row">
+            <button className="btn btn-danger" onClick={handleRemove}>Remove</button>
             <div className="container">
                 <p> Name: {user.name}</p>
                 <p> Email: {user.email}</p>
