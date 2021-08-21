@@ -1,13 +1,30 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { update } from '../redux/userSlice'
 
 function Input() {
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
 
-    console.log(name, email);
+    const user = useSelector((state) => state.user)
+
+    const dispatch = useDispatch()
+
+    function handleUpdate(e) {
+        e.preventDefault()
+        dispatch(update({ name, email }))
+        setName('')
+        setEmail('')
+    }
+
     return (
+
         <div className="row">
+            <div className="container">
+                <p> Name: {user.name}</p>
+                <p> Email: {user.email}</p>
+            </div>
             <form className="form-group container col-md-3">
                 <h2>INPUT</h2>
                 <input
@@ -15,14 +32,16 @@ function Input() {
                     placeholder="Name"
                     type="text"
                     onChange={(e) => setName(e.target.value)}
+                    value={name}
                 />
                 <input
                     className="form-control mt-3"
                     placeholder="Email"
                     type="text"
                     onChange={(e) => setEmail(e.target.value)}
+                    value={email}
                 />
-                <button className="btn btn-primary mt-3" > ADD</button>
+                <button className="btn btn-primary mt-3" onClick={handleUpdate} > Update</button>
             </form>
 
         </div>
